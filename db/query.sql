@@ -1,7 +1,11 @@
 SELECT *
-FROM departments
+FROM departments ON roles.department_id = departments.id;
 
+SELECT *
+FROM roles ON employees.role_id = roles.id;
 
+SELECT *
+FROM employees ON managers.employee_id = employees.id;
 
-FROM course_names
-JOIN department ON course_names.department = department.id;
+SELECT *
+FROM employees ON managers.role_id = roles.id;
