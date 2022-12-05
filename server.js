@@ -1,15 +1,20 @@
 const express = require("express");
+const path = require("path");
+const api = require("./index.js");
 // Import and require mysql2
 const mysql = require("mysql2");
-const inquirer = require("inquirer");
 const consoleTable = require("console.table");
 
-const PORT = process.env.PORT || 3001;
+const PORT = 3001;
+
 const app = express();
 
-// Express middleware
-app.use(express.urlencoded({ extended: false }));
+// Middleware for parsing JSON and urlencoded form data
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use("/api", api);
+
+app.use(express.static("public"));
 
 // Connect to database
 const db = mysql.createConnection(
@@ -39,6 +44,6 @@ app.use((req, res) => {
   res.status(404).end();
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+app.listen(PORT, () =>
+  console.log(`App listening at http://localhost:${PORT} 🚀`)
+);
