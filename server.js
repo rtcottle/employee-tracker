@@ -15,13 +15,11 @@ app.use(express.json());
 const db = mysql.createConnection(
   {
     host: "localhost",
-    // MySQL username,
     user: "root",
-    // MySQL password
-    password: "",
-    database: "courses_db",
+    password: "password",
+    database: "employee_tracking",
   },
-  console.log(`Connected to the courses_db database.`)
+  console.log(`Connected to the employee_tracking database.`)
 );
 
 // db.query(`DELETE FROM course_names WHERE id = ?`, 3, (err, result) => {
