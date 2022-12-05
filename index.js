@@ -1,7 +1,8 @@
 const inquirer = require("inquirer");
-// const Manager = require("./manager");
-// const Employee = require("./employee");
-// const role = require("./role");
+// const managers = require("../routes/manager");
+// const employees = require("../routes/employee");
+// const roles = require("../routes/role");
+// const departments = require("../routes/departments");
 
 const baseQuestions = () => {
   inquirer
@@ -45,7 +46,7 @@ const baseQuestions = () => {
         updateEmployeeRole();
       }
       if (userInput.choice === "Quit") {
-        quit();
+        return console.log("Have a nice day");
       }
     });
 };
