@@ -3,6 +3,7 @@ const inquirer = require("inquirer");
 // const employees = require("../routes/employee");
 // const roles = require("../routes/role");
 // const departments = require("../routes/departments");
+const mysql = require("mysql2");
 
 const baseQuestions = () => {
   inquirer
@@ -49,6 +50,27 @@ const baseQuestions = () => {
         return console.log("Have a nice day");
       }
     });
+};
+
+const viewDepartments = () => {
+  // Query database
+  db.query("SELECT * FROM departments", function (err, results) {
+    consoleTable(results);
+  });
+};
+
+const viewEmployees = () => {
+  // Query database
+  db.query("SELECT * FROM employees", function (err, results) {
+    consoleTable(results);
+  });
+};
+
+const viewRoles = () => {
+  // Query database
+  db.query("SELECT * FROM roles", function (err, results) {
+    consoleTable(results);
+  });
 };
 
 baseQuestions();
