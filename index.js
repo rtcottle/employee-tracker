@@ -3,9 +3,9 @@ const inquirer = require("inquirer");
 // const employees = require("../routes/employee");
 // const roles = require("../routes/role");
 // const departments = require("../routes/departments");
-const mysql = require("mysql2");
-const consoleTable = require("console.table");
+require("console.table");
 // const { addDepartment } = addDepartment;
+const db = require("./db/utils");
 
 const baseQuestions = () => {
   inquirer
@@ -57,22 +57,45 @@ const baseQuestions = () => {
 const viewDepartments = () => {
   // Query database
   db.query("SELECT * FROM departments", function (err, results) {
-    consoleTable(results);
+    console.table(results);
+    baseQuestions();
   });
 };
 
 const viewEmployees = () => {
   // Query database
   db.query("SELECT * FROM employees", function (err, results) {
-    consoleTable(results);
+    console.table(results);
+    baseQuestions();
   });
 };
 
 const viewRoles = () => {
   // Query database
   db.query("SELECT * FROM roles", function (err, results) {
-    consoleTable(results);
+    console.table(results);
+    baseQuestions();
   });
+};
+
+const addDepartment = () => {
+  inquirer
+    .prompt([
+      {
+        //TODO: ADD PROMPT HERE. TEMP NEEDS TO BE DEPARTMENT
+      },
+    ])
+    .then((results) => {
+      const sql = `INSERT INTO departments (name)
+      VALUES (?)`;
+      const params = results.department;
+
+      // TODO: USE CLASS CODE TO REFERENCE ?? IN THE CODE
+      db.query(sql, params, function (err, results) {
+        console.log("department added!");
+        baseQuestions();
+      });
+    });
 };
 
 baseQuestions();
