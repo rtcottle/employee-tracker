@@ -1,10 +1,8 @@
 # Employee Tracker
 
-<!-- TODO: WRITE EMPLOYEE INFO HERE -->
-
 ## Description
 
-This is a project to generate a team roster for ease of use later on.
+This is a project to explore mysql and database use.
 
 ## Table of Contents
 
@@ -27,18 +25,15 @@ Inquirer is required for this package. This can be installed by running "npm i i
 
 ## Usage
 
-Open this app to create a team with a manager, engineers, and interns.
+Open this app in the integrated terminal to manage employees, roles and departments.
 
-Link to video of this program working: https://drive.google.com/file/d/163kDpDALei3IWjs8lTXV0wL_rWKWhZYn/view
+Link to video of this program working:
 
 ![screenshot of possible result](./screenshot.png)
 
 ## Credits
 
-- README formatting: https://coding-boot-camp.github.io/full-stack/github/professional-readme-guide/
 - Inquirer: https://www.npmjs.com/package/inquirer
-- Bulma: https://bulma.io/
-- Classes help: https://www.freecodecamp.org/news/javascript-classes-how-they-work-with-use-case/#use-case-description
 
 ## License
 
@@ -46,7 +41,7 @@ This project is under the [![License: MIT](https://img.shields.io/badge/License-
 
 ## Features
 
-This app helps to generate a team/group roster.
+This app helps to manage employees and roles in a given organization.
 
 ## How to Contribute
 
