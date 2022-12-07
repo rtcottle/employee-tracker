@@ -4,6 +4,8 @@ const inquirer = require("inquirer");
 // const roles = require("../routes/role");
 // const departments = require("../routes/departments");
 const mysql = require("mysql2");
+const consoleTable = require("console.table");
+// const { addDepartment } = addDepartment;
 
 const baseQuestions = () => {
   inquirer
