@@ -1,10 +1,5 @@
 const inquirer = require("inquirer");
-// const managers = require("../routes/manager");
-// const employees = require("../routes/employee");
-// const roles = require("../routes/role");
-// const departments = require("../routes/departments");
 require("console.table");
-// const { addDepartment } = addDepartment;
 const db = require("./db/utils");
 
 const baseQuestions = () => {
