@@ -78,11 +78,13 @@ const viewRoles = () => {
   });
 };
 
-const addDepartment = () => {
+const addDepartment = (req, res) => {
   inquirer
     .prompt([
       {
-        //TODO: ADD PROMPT HERE. TEMP NEEDS TO BE DEPARTMENT
+        name: "department",
+        type: "input",
+        message: "What department would you like to add?",
       },
     ])
     .then((results) => {
@@ -90,9 +92,145 @@ const addDepartment = () => {
       VALUES (?)`;
       const params = results.department;
 
-      // TODO: USE CLASS CODE TO REFERENCE ?? IN THE CODE
-      db.query(sql, params, function (err, results) {
+      db.query(sql, params, (err, results) => {
+        if (err) {
+          res.status(401).json({ error: err.message });
+          return;
+        }
+        console.log(Response);
+        res.json({
+          message: "Department Added",
+          data: body,
+        });
         console.log("department added!");
+        console.log(params);
+        baseQuestions();
+      });
+    });
+};
+
+const addRole = (req, res) => {
+  inquirer
+    .prompt([
+      {
+        name: "role",
+        type: "input",
+        message: "What role would you like to add?",
+      },
+      {
+        name: "salary",
+        type: "number",
+        message: "Please enter the yearly salary like this: XXXXXXXX",
+      },
+      {
+        name: "department",
+        type: "list",
+        message: "What department is this role under?",
+        choices: db.query("SELECT * FROM departments.name"),
+      },
+    ])
+    .then((results) => {
+      const sql = `INSERT INTO departments (name)
+      VALUES (?)`;
+      const params = results.department;
+
+      db.query(sql, params, (err, results) => {
+        if (err) {
+          res.status(401).json({ error: err.message });
+          return;
+        }
+        console.log(Response);
+        res.json({
+          message: "Role Added",
+          data: body,
+        });
+        console.log("Role added!");
+        console.log(params);
+        baseQuestions();
+      });
+    });
+};
+
+const addEmployee = (req, res) => {
+  inquirer
+    .prompt([
+      {
+        name: "first-name",
+        type: "input",
+        message: "What is the employee's first name?",
+      },
+      {
+        name: "last-name",
+        type: "input",
+        message: "What is the employee's last name?",
+      },
+      // {
+      //   name: "role",
+      //   type: "list",
+      //   message: "What role is this employee filling?",
+      //   choices: db.query("SELECT * FROM departments.name"),
+      // },{
+      //   name: "manager",
+      //   type: "list",
+      //   message: "Who is this employee's manager?",
+      //   choices: db.query("SELECT * FROM departments.name"),
+      // },
+    ])
+    .then((results) => {
+      const sql = `INSERT INTO departments (name)
+      VALUES (?)`;
+      const params = results.department;
+
+      db.query(sql, params, (err, results) => {
+        if (err) {
+          res.status(401).json({ error: err.message });
+          return;
+        }
+        console.log(Response);
+        res.json({
+          message: "Employee Added",
+          data: body,
+        });
+        console.log("Employee added!");
+        console.log(params);
+        baseQuestions();
+      });
+    });
+};
+
+const updateEmployeeRole = (req, res) => {
+  inquirer
+    .prompt([
+      {
+        name: "employee",
+        type: "list",
+        message: "Which employee's role needs to be updated?",
+        // choices: TODO: list of current employees here.
+      },
+      {
+        name: "role",
+        type: "list",
+        message: "What role is this employee moving to?",
+        // choices: TODO: list of roles here,
+      },
+    ])
+    .then((results) => {
+      const sql = `INSERT INTO departments (name)
+      VALUES (?)`;
+      const params = results.department;
+
+      db.query(sql, params, (err, results) => {
+        if (err) {
+          res.status(401).json({ error: err.message });
+          return;
+        }
+        console.log(Response);
+        res.json({
+          message: "Role Updated",
+          data: body,
+        });
+        console.log("Role Updated!");
+        console.log(params);
         baseQuestions();
       });
     });

@@ -11,12 +11,16 @@ VALUES ("Marketing Manager", 75000, 1),
 ("Attorney", 150000, 3),
 ("Legal Clerk", 65000, 3);
 
-INSERT INTO employees (first_name, last_name, role_id) -- add manager id here and then to each employee
-VALUES ("John", "Smith", 1),
-("Patty", "Johansen", 2),
-("James", "Wright", 3),
-("Samantha", "Jones", 4),
-("George", "Buffalo", 5),
-("Timothy", "Solo", 6);
+INSERT INTO employees (first_name, last_name, role_id, manager_id)
+VALUES ("John", "Smith", 1, null),
+("Patty", "Johansen", 2, null),
+("James", "Wright", 3, null),
+("Samantha", "Jones", 4, 3),
+("George", "Buffalo", 5, null),
+("Timothy", "Solo", 6, 4);
 
--- Add managers seeds here
+INSERT INTO managers (first_name, last_name, role_id, employees_id)
+VALUES ("John", "Smith", 1, 1),
+("Patty", "Johansen", 2, 2),
+("James", "Wright", 3, 3),
+("George", "Buffalo", 5, 5),
