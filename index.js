@@ -137,18 +137,27 @@ const addRole = () => {
       },
     ])
     .then((results) => {
-      const sql = `INSERT INTO departments (name)
-      VALUES (?)`;
-      const params = results.department;
+      db.promise()
+        .query(
+          "SELECT id FROM departments WHERE name=" +
+            '"' +
+            results.department +
+            '"'
+        )
+        .then((deptId) => {
+          const sql = `INSERT INTO roles (title, salary, department_id)
+          VALUES (?, ?, ?)`;
+          const params = [results.role, results.salary, deptId[0][0].id];
 
-      db.query(sql, params, (err, results) => {
-        if (err) {
-          console.log("You have an error:", err);
-          return;
-        }
-        console.log("Role added!");
-        baseQuestions();
-      });
+          db.query(sql, params, (err, results) => {
+            if (err) {
+              console.log("You have an error:", err);
+              return;
+            }
+            console.log("Role added!");
+            baseQuestions();
+          });
+        });
     });
 };
 
@@ -169,19 +178,38 @@ const addEmployee = () => {
         name: "role",
         type: "list",
         message: "What role is this employee filling?",
-        choices: db.query("SELECT * FROM departments.name"),
+        choices: async () => {
+          const q = await db.promise().query("SELECT title FROM roles");
+          const w = q[0].map((e) => {
+            return e.title;
+          });
+          return w;
+        },
       },
       {
         name: "manager",
         type: "list",
         message: "Who is this employee's manager?",
-        choices: db.query("SELECT * FROM departments.name"),
+        choices: async () => {
+          const q = await db
+            .promise()
+            .query("SELECT CONCAT(first_name, ` `, last_name) FROM managers");
+          const w = q[0].map((e) => {
+            return e.name;
+          });
+          return w;
+        },
       },
     ])
     .then((results) => {
-      const sql = `INSERT INTO departments (name)
-      VALUES (?)`;
-      const params = results.department;
+      const sql = `INSERT INTO employees (first_name, last_name, role, manager)
+      VALUES (?, ?, ?, ?)`;
+      const params = [
+        results.first_name,
+        results.last_name,
+        results.role,
+        results.manager,
+      ];
 
       db.query(sql, params, (err, results) => {
         if (err) {
@@ -201,19 +229,33 @@ const updateEmployeeRole = () => {
         name: "employee",
         type: "list",
         message: "Which employee's role needs to be updated?",
-        // choices: TODO: list of current employees here.
+        choices: async () => {
+          const q = await db
+            .promise()
+            .query("SELECT CONCAT(first_name) FROM employees");
+          const w = q[0].map((e) => {
+            return e.first_name;
+          });
+          return w;
+        },
       },
       {
         name: "role",
         type: "list",
         message: "What role is this employee moving to?",
-        // choices: TODO: list of roles here,
+        choices: async () => {
+          const q = await db.promise().query("SELECT title FROM roles");
+          const w = q[0].map((e) => {
+            return e.title;
+          });
+          return w;
+        },
       },
     ])
     .then((results) => {
-      const sql = `INSERT INTO departments (name)
+      const sql = `INSERT INTO roles (title)
       VALUES (?)`;
-      const params = results.department;
+      const params = results.roles;
 
       db.query(sql, params, (err, results) => {
         if (err) {
