@@ -13,6 +13,7 @@ const baseQuestions = () => {
           "View all departments",
           "View all roles",
           "View all employees",
+          "View all managers",
           "Add a department",
           "Add a role",
           "Add an employee",
@@ -30,6 +31,9 @@ const baseQuestions = () => {
       }
       if (userInput.choice === "View all employees") {
         viewEmployees();
+      }
+      if (userInput.choice === "View all managers") {
+        viewManagers();
       }
       if (userInput.choice === "Add a department") {
         addDepartment();
@@ -73,6 +77,14 @@ const viewRoles = () => {
   });
 };
 
+const viewManagers = () => {
+  // Query database
+  db.query("SELECT * FROM managers", function (err, results) {
+    console.table(results);
+    baseQuestions();
+  });
+};
+
 const addDepartment = (req, res) => {
   inquirer
     .prompt([
@@ -92,7 +104,6 @@ const addDepartment = (req, res) => {
           res.status(401).json({ error: err.message });
           return;
         }
-        console.log(Response);
         res.json({
           message: "Department Added",
           data: body,
