@@ -85,7 +85,7 @@ const viewManagers = () => {
   });
 };
 
-const addDepartment = (req, res) => {
+const addDepartment = () => {
   inquirer
     .prompt([
       {
@@ -101,21 +101,16 @@ const addDepartment = (req, res) => {
 
       db.query(sql, params, (err, results) => {
         if (err) {
-          res.status(401).json({ error: err.message });
+          console.log("You have an error:", err);
           return;
         }
-        res.json({
-          message: "Department Added",
-          data: body,
-        });
         console.log("department added!");
-        console.log(params);
         baseQuestions();
       });
     });
 };
 
-const addRole = (req, res) => {
+const addRole = () => {
   inquirer
     .prompt([
       {
@@ -132,7 +127,13 @@ const addRole = (req, res) => {
         name: "department",
         type: "list",
         message: "What department is this role under?",
-        choices: db.query("SELECT * FROM departments.name"),
+        choices: async () => {
+          const q = await db.promise().query("SELECT name FROM departments");
+          const w = q[0].map((e) => {
+            return e.name;
+          });
+          return w;
+        },
       },
     ])
     .then((results) => {
@@ -142,22 +143,16 @@ const addRole = (req, res) => {
 
       db.query(sql, params, (err, results) => {
         if (err) {
-          res.status(401).json({ error: err.message });
+          console.log("You have an error:", err);
           return;
         }
-        console.log(Response);
-        res.json({
-          message: "Role Added",
-          data: body,
-        });
         console.log("Role added!");
-        console.log(params);
         baseQuestions();
       });
     });
 };
 
-const addEmployee = (req, res) => {
+const addEmployee = () => {
   inquirer
     .prompt([
       {
@@ -170,17 +165,18 @@ const addEmployee = (req, res) => {
         type: "input",
         message: "What is the employee's last name?",
       },
-      // {
-      //   name: "role",
-      //   type: "list",
-      //   message: "What role is this employee filling?",
-      //   choices: db.query("SELECT * FROM departments.name"),
-      // },{
-      //   name: "manager",
-      //   type: "list",
-      //   message: "Who is this employee's manager?",
-      //   choices: db.query("SELECT * FROM departments.name"),
-      // },
+      {
+        name: "role",
+        type: "list",
+        message: "What role is this employee filling?",
+        choices: db.query("SELECT * FROM departments.name"),
+      },
+      {
+        name: "manager",
+        type: "list",
+        message: "Who is this employee's manager?",
+        choices: db.query("SELECT * FROM departments.name"),
+      },
     ])
     .then((results) => {
       const sql = `INSERT INTO departments (name)
@@ -189,22 +185,16 @@ const addEmployee = (req, res) => {
 
       db.query(sql, params, (err, results) => {
         if (err) {
-          res.status(401).json({ error: err.message });
+          console.log("You have an error:", err);
           return;
         }
-        console.log(Response);
-        res.json({
-          message: "Employee Added",
-          data: body,
-        });
         console.log("Employee added!");
-        console.log(params);
         baseQuestions();
       });
     });
 };
 
-const updateEmployeeRole = (req, res) => {
+const updateEmployeeRole = () => {
   inquirer
     .prompt([
       {
@@ -227,16 +217,10 @@ const updateEmployeeRole = (req, res) => {
 
       db.query(sql, params, (err, results) => {
         if (err) {
-          res.status(401).json({ error: err.message });
+          console.log("You have an error:", err);
           return;
         }
-        console.log(Response);
-        res.json({
-          message: "Role Updated",
-          data: body,
-        });
         console.log("Role Updated!");
-        console.log(params);
         baseQuestions();
       });
     });
