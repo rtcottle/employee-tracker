@@ -27,7 +27,7 @@ Inquirer is required for this package. This can be installed by running "npm i i
 
 Open this app in the integrated terminal to manage employees, roles and departments.
 
-Link to video of this program working:
+Link to video of this program working: https://drive.google.com/file/d/1bbg-0lmiBJK25-zqnff4H-W493EbN7H-/view
 
 ![screenshot of possible result](./screenshot.png)
 
